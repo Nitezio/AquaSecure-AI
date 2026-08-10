@@ -1,0 +1,25 @@
+services:
+  ai-detector:
+    build: ./ai-detector
+    ports:
+      - "8000:8000"
+    networks:
+      - aquasecure-net
+
+  telemetry-streamer:
+    build: ./telemetry-streamer
+    ports:
+      - "3001:3001"
+    networks:
+      - aquasecure-net
+
+  web-dashboard:
+    build: ./web-dashboard
+    ports:
+      - "8080:8080"
+    networks:
+      - aquasecure-net
+
+networks:
+  aquasecure-net:
+    driver: bridge
