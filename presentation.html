@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AquaSecure AI - UCRIX 2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/white.min.css" id="theme">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap');
+    
+    .reveal {
+      font-family: 'Outfit', sans-serif;
+      background-color: #f8fafc; /* Tailwind slate-50 */
+    }
+    
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Outfit', sans-serif;
+      text-transform: none;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 20px;
+    }
+    
+    .reveal p, .reveal li {
+      font-size: 0.85em;
+      line-height: 1.4;
+      color: #334155;
+    }
+    
+    .text-primary { color: #0284c7; } /* Ocean Blue */
+    .text-secondary { color: #f59e0b; } /* Alert Amber */
+    .bg-primary { background-color: #0284c7; }
+    .bg-secondary { background-color: #f59e0b; }
+    
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      border-bottom: 4px solid #0284c7;
+      margin: 10px;
+      text-align: left;
+    }
+    
+    .card-amber {
+      border-bottom: 4px solid #f59e0b;
+    }
+    
+    .card h4 {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+      color: #0284c7;
+    }
+    
+    .card-amber h4 {
+      color: #f59e0b;
+    }
+    
+    .reveal section img {
+      border: none;
+      box-shadow: none;
+      background: transparent;
+      margin: 0;
+    }
+    
+    /* Table styling for Slide 7 */
+    .reveal table {
+      width: 100%;
+      font-size: 0.7em;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    
+    .reveal th {
+      background-color: #0284c7;
+      color: white;
+      text-align: center;
+      padding: 12px;
+    }
+    
+    .reveal td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .reveal td:first-child {
+      text-align: left;
+      font-weight: 600;
+      background-color: #f1f5f9;
+    }
+    
+    .check { color: #10b981; font-weight: bold; } /* Emerald */
+    .cross { color: #ef4444; font-weight: bold; } /* Red */
+    
+    /* Custom utility classes */
+    .highlight-box {
+      background: #eff6ff;
+      border-left: 6px solid #0284c7;
+      padding: 15px 25px;
+      margin: 20px 0;
+      text-align: left;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    
+    /* Diagram lines */
+    .arrow {
+      color: #94a3b8;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1: Project front page -->
+      <section class="text-center">
+        <div class="flex justify-center items-center mb-6">
+          <i class="fa-solid fa-shield-water text-6xl text-primary mr-4"></i>
+          <h1 class="text-6xl font-extrabold m-0"><span class="text-primary">Aqua</span>Secure AI</h1>
+        </div>
+        <div class="highlight-box inline-block text-xl mx-auto mb-10 shadow-sm">
+          Explainable cyber defence for intelligent water infrastructure.
+        </div>
+        <div class="mt-8">
+          <h3 class="text-2xl font-bold text-gray-700">UCRIX 2026</h3>
+          <p class="text-lg text-gray-500 mt-2">Team Members</p>
+          <div class="flex justify-center gap-6 mt-4 text-base font-semibold text-gray-800">
+            <span class="bg-white px-4 py-2 rounded-full shadow-sm">Sriram</span>
+            <span class="bg-white px-4 py-2 rounded-full shadow-sm">Hardeep</span>
+            <span class="bg-white px-4 py-2 rounded-full shadow-sm">Izzah</span>
+            <span class="bg-white px-4 py-2 rounded-full shadow-sm">Nitesh</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Problem statement -->
+      <section>
+        <h2 class="text-primary">Problem Statement</h2>
+        <p class="mb-8 text-left text-xl">Water-treatment operations depend on networked sensors, actuators, and PLCs. However, securing them remains a critical challenge.</p>
+        
+        <div class="grid grid-cols-3 gap-6">
+          <div class="card">
+            <div class="text-3xl mb-4 text-primary"><i class="fa-solid fa-industry"></i></div>
+            <h4>Critical Infrastructure Risk</h4>
+            <p>Manipulated equipment can affect flow, tank levels, and chemical processes, endangering water supply.</p>
+          </div>
+          <div class="card card-amber">
+            <div class="text-3xl mb-4 text-secondary"><i class="fa-solid fa-chart-line"></i></div>
+            <h4 class="text-secondary">Detection Limitation</h4>
+            <p>Static threshold alarms fail to capture coordinated or gradual attacks, and conventional alerts provide limited explanations.</p>
+          </div>
+          <div class="card">
+            <div class="text-3xl mb-4 text-primary"><i class="fa-solid fa-user-shield"></i></div>
+            <h4>Operator Decision Gap</h4>
+            <p>Smaller utilities lack dedicated OT-security teams. Operators need rapid, understandable evidence during an incident.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Project and SDG goals -->
+      <section>
+        <h2 class="text-primary">AquaSecure AI & SDGs</h2>
+        <p class="mb-8 text-left text-lg">Aligning intelligent infrastructure monitoring with the UN Sustainable Development Goals.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card flex flex-col items-center text-center">
+            <img src="https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-06.jpg" alt="SDG 6" class="h-24 w-24 object-cover rounded-lg mb-4">
+            <h4 class="text-primary">Clean Water & Sanitation</h4>
+            <p class="text-sm">Supports the reliability and security of water-treatment services. Monitors physical indicators influencing treatment.</p>
+          </div>
+          <div class="card flex flex-col items-center text-center">
+            <img src="https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-09.jpg" alt="SDG 9" class="h-24 w-24 object-cover rounded-lg mb-4">
+            <h4 class="text-primary">Industry, Innovation</h4>
+            <p class="text-sm">Applies AI and cybersecurity to critical industrial infrastructure for resilient, technology-enabled monitoring.</p>
+          </div>
+          <div class="card flex flex-col items-center text-center">
+            <img src="https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-11.jpg" alt="SDG 11" class="h-24 w-24 object-cover rounded-lg mb-4">
+            <h4 class="text-primary">Sustainable Cities</h4>
+            <p class="text-sm">Water services are essential to resilient communities. Improved monitoring supports the continuity of public services.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Solution overview -->
+      <section>
+        <h2 class="text-primary">Solution Overview</h2>
+        <p class="mb-8 text-left text-lg">An end-to-end pipeline that transforms raw telemetry into explainable operator action.</p>
+        
+        <div class="flex justify-between items-center bg-white rounded-xl shadow-sm p-6 mb-8 border border-gray-100">
+          <div class="text-center w-1/4">
+            <div class="bg-blue-100 text-primary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-satellite-dish"></i></div>
+            <h4 class="font-bold text-gray-800">1. Observe</h4>
+            <p class="text-xs">Replay SWaT sensor & actuator telemetry</p>
+          </div>
+          <i class="fa-solid fa-chevron-right arrow"></i>
+          <div class="text-center w-1/4">
+            <div class="bg-blue-100 text-primary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-microchip"></i></div>
+            <h4 class="font-bold text-gray-800">2. Detect</h4>
+            <p class="text-xs">Evaluate against learned normal behaviour</p>
+          </div>
+          <i class="fa-solid fa-chevron-right arrow"></i>
+          <div class="text-center w-1/4">
+            <div class="bg-amber-100 text-secondary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-comment-dots"></i></div>
+            <h4 class="font-bold text-gray-800">3. Explain</h4>
+            <p class="text-xs">Attach XAI & physics-rule evidence</p>
+          </div>
+          <i class="fa-solid fa-chevron-right arrow"></i>
+          <div class="text-center w-1/4">
+            <div class="bg-red-100 text-red-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h4 class="font-bold text-gray-800">4. Respond</h4>
+            <p class="text-xs">Show immediate operator-facing threat state</p>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <i class="fa-solid fa-gauge-high mr-2"></i> Main monitored metrics: <b>AIT201</b> (pH) | <b>FIT101</b> (Flow) | <b>MV101</b> (Motorized Valve State)
+        </div>
+      </section>
+
+      <!-- Slide 5: Solution architecture -->
+      <section>
+        <h2 class="text-primary">Solution Architecture</h2>
+        
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mt-8 relative">
+          <!-- Main Flow -->
+          <div class="flex justify-between items-center text-center">
+            
+            <div class="w-1/5">
+              <div class="border-2 border-gray-300 rounded p-3 mb-2 bg-gray-50"><i class="fa-solid fa-database text-xl text-gray-600"></i><br><span class="text-xs font-bold">SWaT Dataset</span></div>
+            </div>
+            
+            <div class="w-1/5 text-xs text-gray-400">
+              <div class="border-t-2 border-dashed border-primary mt-2"></div>
+              <span class="text-primary">Telemetry</span>
+            </div>
+
+            <div class="w-1/5">
+              <div class="border-2 border-primary rounded p-3 mb-2 bg-blue-50"><i class="fa-brands fa-node-js text-xl text-green-600"></i><br><span class="text-xs font-bold">Node.js Streamer</span></div>
+            </div>
+            
+            <div class="w-1/5 text-xs text-gray-400">
+              <div class="border-t-2 border-dashed border-red-400 mt-2"></div>
+              <span class="text-red-500">Anomaly Check</span>
+            </div>
+
+            <div class="w-1/5">
+              <div class="border-2 border-red-400 rounded p-3 mb-2 bg-red-50"><i class="fa-brands fa-python text-xl text-blue-600"></i><br><span class="text-xs font-bold">Python AI Inference</span></div>
+            </div>
+          </div>
+
+          <div class="flex justify-center my-4">
+            <div class="border-l-2 border-dashed border-secondary h-12 flex items-center pl-2 text-xs font-bold text-secondary">
+              Genkit AI Alert Routing
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center text-center">
+            
+            <div class="w-1/5 opacity-0">Spacer</div>
+            
+            <div class="w-1/5 opacity-0">Spacer</div>
+
+            <div class="w-1/5">
+              <div class="border-2 border-primary rounded p-3 mb-2 bg-blue-50"><i class="fa-brands fa-node-js text-xl text-green-600"></i><br><span class="text-xs font-bold">Node.js WebServer</span></div>
+            </div>
+            
+            <div class="w-1/5 text-xs text-gray-400">
+              <div class="flex flex-col">
+                <span class="text-blue-500">WebSocket ⮂</span>
+                <span class="text-xs text-gray-500">Alerts & Acks</span>
+              </div>
+            </div>
+
+            <div class="w-1/5">
+              <div class="border-2 border-blue-500 rounded p-3 mb-2 bg-blue-500 text-white"><i class="fa-brands fa-flutter text-xl text-white"></i><br><span class="text-xs font-bold">Flutter Dashboard</span></div>
+            </div>
+          </div>
+
+        </div>
+        
+      </section>
+
+      <!-- Slide 6: Unique value proposition -->
+      <section>
+        <h2 class="text-primary">Unique Value Proposition</h2>
+        
+        <div class="highlight-box text-center text-xl my-8">
+          AquaSecure AI does not only identify abnormal behaviour—it tells operators 
+          <span class="text-primary font-bold">what changed</span>, 
+          <span class="text-secondary font-bold">why it is suspicious</span> and 
+          <span class="text-primary font-bold">where to investigate</span>.
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 text-left">
+          <div class="card p-4">
+            <h4 class="text-sm"><i class="fa-solid fa-brain mr-2"></i> Dynamic Learning</h4>
+            <p class="text-xs">Learns normal physical behaviour instead of relying only on static limits.</p>
+          </div>
+          <div class="card p-4 card-amber">
+            <h4 class="text-sm text-secondary"><i class="fa-solid fa-code-compare mr-2"></i> Hybrid Detection</h4>
+            <p class="text-xs">Combines anomaly detection with physics-informed checking.</p>
+          </div>
+          <div class="card p-4">
+            <h4 class="text-sm"><i class="fa-solid fa-magnifying-glass-chart mr-2"></i> Sensor Attribution</h4>
+            <p class="text-xs">Explains precisely which sensors contributed to an alert.</p>
+          </div>
+          <div class="card p-4 card-amber">
+            <h4 class="text-sm text-secondary"><i class="fa-solid fa-language mr-2"></i> Operator Translation</h4>
+            <p class="text-xs">Translates technical anomalies into operator-friendly reasons.</p>
+          </div>
+          <div class="card p-4 col-span-2 flex items-center">
+            <div class="w-12 text-center text-2xl text-primary"><i class="fa-solid fa-desktop"></i></div>
+            <div class="ml-4">
+              <h4 class="text-sm mb-1">Lightweight & Accessible</h4>
+              <p class="text-xs">Provides a lightweight visual interface designed as a more accessible prototype for smaller utilities.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 7: Competitor analysis -->
+      <section>
+        <h2 class="text-primary">Competitor Analysis</h2>
+        
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mt-6">
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: left; background-color: #f8fafc; color: #334155; border-bottom: 2px solid #e2e8f0;">Comparison Criteria</th>
+                <th>AquaSecure AI</th>
+                <th>Dragos</th>
+                <th>Nozomi Networks</th>
+                <th>Claroty</th>
+                <th>Conventional SCADA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OT Monitoring <br><span class="text-xs font-normal text-gray-500">Monitors industrial environments</span></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+              </tr>
+              <tr>
+                <td>Explainability <br><span class="text-xs font-normal text-gray-500">Operators receive reasons/evidence</span></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-xmark cross"></i></td>
+              </tr>
+              <tr>
+                <td>Physics-Informed Checks <br><span class="text-xs font-normal text-gray-500">Physical-process relationships considered</span></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-question text-gray-400"></i></td>
+                <td><i class="fa-solid fa-question text-gray-400"></i></td>
+                <td><i class="fa-solid fa-question text-gray-400"></i></td>
+                <td><i class="fa-solid fa-xmark cross"></i></td>
+              </tr>
+              <tr>
+                <td>Water-Sector Focus <br><span class="text-xs font-normal text-gray-500">Relevance to water-treatment processes</span></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+              </tr>
+              <tr>
+                <td>Small-Utility Accessibility <br><span class="text-xs font-normal text-gray-500">Suitability for constrained environments</span></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+                <td><i class="fa-solid fa-xmark cross"></i></td>
+                <td><i class="fa-solid fa-xmark cross"></i></td>
+                <td><i class="fa-solid fa-xmark cross"></i></td>
+                <td><i class="fa-solid fa-check check"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <p class="text-sm mt-6 italic text-gray-600 bg-blue-50 p-3 rounded text-center border border-blue-100">
+          *AquaSecure AI is a student prototype combining anomaly detection, physics-informed reasoning and operator-facing explanations tailored for water-treatment monitoring.
+        </p>
+      </section>
+
+      <!-- Slide 8: Impacts -->
+      <section>
+        <h2 class="text-primary">Project Impacts</h2>
+        
+        <div class="grid grid-cols-2 gap-6 mt-8">
+          
+          <div class="card border-l-4 border-l-blue-500 text-left h-full">
+            <h4 class="flex items-center text-blue-600"><i class="fa-solid fa-gears mr-3"></i> Operational Impact</h4>
+            <ul class="text-sm list-disc pl-5 mt-2 space-y-1">
+              <li>Faster visibility of abnormal process behaviour.</li>
+              <li>Centralized telemetry and threat monitoring.</li>
+              <li>Clearer operator decisions during incidents.</li>
+            </ul>
+          </div>
+          
+          <div class="card border-l-4 border-l-green-500 text-left h-full">
+            <h4 class="flex items-center text-green-600"><i class="fa-solid fa-users mr-3"></i> Social Impact</h4>
+            <ul class="text-sm list-disc pl-5 mt-2 space-y-1">
+              <li>Supports the reliability of essential water services.</li>
+              <li>Helps protect public confidence in water-treatment infrastructure.</li>
+            </ul>
+          </div>
+
+          <div class="card border-l-4 border-l-purple-500 text-left h-full">
+            <h4 class="flex items-center text-purple-600"><i class="fa-solid fa-microchip mr-3"></i> Technical Impact</h4>
+            <ul class="text-sm list-disc pl-5 mt-2 space-y-1">
+              <li>Demonstrates explainable & physics-aware OT monitoring.</li>
+              <li>Connects AI inference directly to real-time visualization.</li>
+            </ul>
+          </div>
+
+          <div class="card border-l-4 border-l-amber-500 text-left h-full">
+            <h4 class="flex items-center text-amber-600"><i class="fa-solid fa-handshake-angle mr-3"></i> Accessibility Impact</h4>
+            <ul class="text-sm list-disc pl-5 mt-2 space-y-1">
+              <li>Makes complex model output understandable to non-ML operators.</li>
+              <li>Explores lightweight monitoring for resource-constrained utilities.</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Slide 9: Future improvement -->
+      <section>
+        <h2 class="text-primary">Future Improvement</h2>
+        <p class="mb-6 text-left">A realistic development roadmap for advancing the prototype.</p>
+
+        <div class="grid grid-cols-2 gap-4 text-left">
+          <div>
+            <h4 class="text-lg text-primary border-b border-gray-200 pb-2 mb-3">Near-Term Technical Goals</h4>
+            <ul class="text-sm list-disc pl-5 space-y-2">
+              <li>Fine-grained attack-type classification.</li>
+              <li>Incorporation of additional physics invariants.</li>
+              <li>Adversarial robustness testing against evasion.</li>
+              <li>Testing on BATADAL and other ICS datasets.</li>
+              <li>Broader SWaT sensor coverage.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg text-secondary border-b border-gray-200 pb-2 mb-3">Long-Term Deployment</h4>
+            <ul class="text-sm list-disc pl-5 space-y-2">
+              <li>Slow sensor-drift detection capabilities.</li>
+              <li>Edge or TinyML deployment for local monitoring.</li>
+              <li>Operator-feedback studies for UI refinement.</li>
+              <li>Improved alert prioritization logic.</li>
+              <li>Secure real-facility pilots after safety validation.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 10: Business model -->
+      <section>
+        <h2 class="text-primary">Proposed Business Model</h2>
+        
+        <div class="flex flex-col gap-4 mt-6">
+          
+          <div class="flex gap-4">
+            <div class="w-1/2 card text-left h-full">
+              <h4 class="text-primary"><i class="fa-solid fa-building mr-2"></i> Target Customers</h4>
+              <ul class="text-sm list-disc pl-5">
+                <li>Municipal water utilities</li>
+                <li>Small and medium treatment operators</li>
+                <li>Managed-security providers</li>
+                <li>Infrastructure operators</li>
+              </ul>
+            </div>
+            
+            <div class="w-1/2 card text-left card-amber h-full">
+              <h4 class="text-secondary"><i class="fa-solid fa-rocket mr-2"></i> Entry Strategy</h4>
+              <ul class="text-sm list-disc pl-5">
+                <li>Free proof-of-concept or pilot</li>
+                <li>University/utility partnerships</li>
+                <li>Dataset-based demonstration</li>
+                <li>Community tier for smaller utilities</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="w-1/2 card text-left h-full">
+              <h4 class="text-primary"><i class="fa-solid fa-wallet mr-2"></i> Potential Paid Services</h4>
+              <ul class="text-sm list-disc pl-5">
+                <li>Deployment support & Monitoring</li>
+                <li>Model maintenance & updates</li>
+                <li>Custom physics-rule configuration</li>
+                <li>Technical support and training</li>
+              </ul>
+            </div>
+            
+            <div class="w-1/2 card text-left h-full">
+              <h4 class="text-primary"><i class="fa-solid fa-chart-pie mr-2"></i> Key Costs</h4>
+              <ul class="text-sm list-disc pl-5">
+                <li>Infrastructure hosting</li>
+                <li>Deployment and integration</li>
+                <li>Model maintenance & Security updates</li>
+                <li>Customer support</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Slide 11: Product demo -->
+      <section>
+        <h2 class="text-primary">Product Demonstration</h2>
+        <p class="text-left mb-6">Visualizing the completed Flutter frontend and operator experience.</p>
+        
+        <!-- Placeholder boxes for Sriram to replace with actual screenshots -->
+        <div class="flex flex-col gap-4">
+          <div class="bg-gray-200 border-2 border-dashed border-gray-400 rounded-xl h-32 flex items-center justify-center text-gray-500 font-bold relative overflow-hidden">
+            <div class="absolute top-2 left-4 text-xs font-normal text-gray-600 bg-white px-2 py-1 rounded shadow-sm">1. Normal monitoring state (Live AIT201 / FIT101 charts)</div>
+            [ Insert Full Dashboard Screenshot Here ]
+          </div>
+          
+          <div class="bg-red-50 border-2 border-dashed border-red-300 rounded-xl h-32 flex items-center justify-center text-red-400 font-bold relative overflow-hidden">
+            <div class="absolute top-2 left-4 text-xs font-normal text-red-600 bg-white px-2 py-1 rounded shadow-sm">2. Critical-threat state & Explanation panel</div>
+            [ Insert Threat Alert Screenshot Here ]
+          </div>
+
+          <div class="bg-blue-50 border-2 border-dashed border-blue-300 rounded-xl h-32 flex items-center justify-center text-blue-400 font-bold relative overflow-hidden">
+            <div class="absolute top-2 left-4 text-xs font-normal text-blue-600 bg-white px-2 py-1 rounded shadow-sm">3. Manual override presentation & Acknowledgement</div>
+            [ Insert Acknowledge State Screenshot Here ]
+          </div>
+        </div>
+        
+        <p class="text-xs text-gray-500 mt-4 italic text-center">Note: The "manual override" state is a simulated operator-facing prototype, not proof that a physical PLC was isolated.</p>
+      </section>
+
+      <!-- Slide 12: Video -->
+      <section>
+        <h2 class="text-primary">Recorded Demonstration</h2>
+        
+        <div class="flex mt-10 bg-white p-8 rounded-xl shadow-md border border-gray-100">
+          <div class="w-1/2 flex flex-col items-center justify-center border-r border-gray-200 pr-8">
+            <!-- QR Code Placeholder -->
+            <div class="w-48 h-48 bg-gray-100 border-2 border-dashed border-gray-300 flex items-center justify-center rounded-lg mb-4">
+              <i class="fa-solid fa-qrcode text-6xl text-gray-400"></i>
+            </div>
+            <a href="#" class="text-primary font-bold underline hover:text-blue-800 text-lg">Watch on YouTube</a>
+          </div>
+          
+          <div class="w-1/2 text-left pl-8 flex flex-col justify-center">
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">UCRIX2026_AquaSecureAI_Demo</h3>
+            <p class="text-sm text-gray-500 mb-4"><i class="fa-regular fa-clock"></i> Approx. 3 Minutes</p>
+            <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-primary">
+              <p class="text-sm font-semibold m-0 text-gray-700">
+                Watch SWaT telemetry move through the anomaly pipeline and trigger an explainable threat response in the AquaSecure AI dashboard.
+              </p>
+            </div>
+            <!-- Thumbnail Placeholder -->
+            <div class="mt-4 w-full h-24 bg-gray-200 rounded flex items-center justify-center text-xs text-gray-500 border border-gray-300">
+              [ Video Thumbnail ]
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 13: Closing slide -->
+      <section class="text-center">
+        <div class="flex justify-center items-center mb-10">
+          <i class="fa-solid fa-shield-water text-8xl text-primary mr-6"></i>
+          <h1 class="text-8xl font-extrabold m-0"><span class="text-primary">Aqua</span>Secure AI</h1>
+        </div>
+        
+        <div class="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-8 shadow-sm inline-block mx-auto mb-12">
+          <h3 class="text-3xl text-gray-800 font-semibold m-0">
+            AquaSecure AI transforms abnormal water-treatment telemetry into timely, explainable operator action.
+          </h3>
+        </div>
+        
+        <div class="flex justify-center items-center gap-12">
+          <div class="text-left">
+            <p class="text-gray-500 font-bold mb-2 uppercase text-sm tracking-wider">The Team</p>
+            <p class="text-lg font-semibold text-gray-800">Sriram</p>
+            <p class="text-lg font-semibold text-gray-800">Hardeep</p>
+            <p class="text-lg font-semibold text-gray-800">Izzah</p>
+            <p class="text-lg font-semibold text-gray-800">Nitesh</p>
+          </div>
+          
+          <div class="h-24 w-px bg-gray-300"></div>
+          
+          <div class="flex flex-col items-center">
+            <div class="w-24 h-24 bg-white border border-gray-200 p-2 rounded-lg shadow-sm mb-2 flex items-center justify-center">
+              <i class="fa-solid fa-qrcode text-4xl text-gray-400"></i>
+            </div>
+            <p class="text-xs text-gray-500 font-semibold">Scan to watch demo</p>
+          </div>
+        </div>
+        
+        <div class="mt-12 text-sm text-gray-400">
+          Thank you for your time.
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      controls: true,
+      progress: true,
+      center: true,
+      transition: 'slide',
+      margin: 0.1,
+    });
+  </script>
+</body>
+</html>

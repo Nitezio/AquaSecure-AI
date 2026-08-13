@@ -15,6 +15,7 @@ class TelemetrySnapshot {
     required this.ph,
     required this.flowRate,
     required this.valveState,
+    required this.allSensors,
     this.rawValveValue,
   });
 
@@ -22,17 +23,25 @@ class TelemetrySnapshot {
   final double ph;
   final double flowRate;
   final ValveState valveState;
+  final Map<String, double> allSensors;
   final Object? rawValveValue;
 
   factory TelemetrySnapshot.fromJson(Map<String, dynamic> json) {
     final sensors = _asMap(json['sensors'] ?? json['telemetry'] ?? json);
     final rawValve = sensors['MV101'] ?? sensors['mv101'];
+    
+    final Map<String, double> parsedSensors = {};
+    for (final entry in sensors.entries) {
+      if (entry.key == 'timestamp' || entry.key == 'Normal/Attack') continue;
+      parsedSensors[entry.key] = _asDouble(entry.value);
+    }
 
     return TelemetrySnapshot(
       timestamp: _parseTimestamp(json['timestamp'] ?? sensors['timestamp']),
-      ph: _asDouble(sensors['AIT201'] ?? sensors['ait201']),
+      ph: _asDouble(sensors['AIT202'] ?? sensors['ait202']),
       flowRate: _asDouble(sensors['FIT101'] ?? sensors['fit101']),
       valveState: _parseValve(rawValve),
+      allSensors: parsedSensors,
       rawValveValue: rawValve,
     );
   }

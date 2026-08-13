@@ -39,7 +39,7 @@ startTelemetryStream({
   filePath: CSV_PATH,
   intervalMs: INTERVAL_MS,
   onRow: async (row) => {
-    broadcast({ type: 'telemetry', data: row, timestamp: new Date().toISOString() });
+    broadcast({ type: 'telemetry', sensors: row, timestamp: new Date().toISOString() });
 
     const prediction = await classifyRow(row);
     if (prediction.anomaly) {

@@ -4,3 +4,7 @@ node_modules/
 *.csv
 __pycache__/
 ai-detector/data/
+.idea/
+web-dashboard/.dart_tool/
+web-dashboard/build/
+*.log

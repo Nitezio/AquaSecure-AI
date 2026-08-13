@@ -9,9 +9,11 @@
     "dev": "node --watch src/index.js"
   },
   "dependencies": {
-    "ws": "^8.18.0",
+    "@genkit-ai/googleai": "^1.28.0",
     "csv-parse": "^5.5.6",
+    "dotenv": "^17.4.2",
     "genkit": "^1.0.0",
+    "ws": "^8.18.0",
     "zod": "^3.23.8"
   }
 }

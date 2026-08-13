@@ -47,6 +47,11 @@ class MockTelemetryGateway implements TelemetryGateway {
           ph: 7.18 + wave * 0.11 + noise + attackLift,
           flowRate: 2.43 + fineWave * 0.065 + noise / 2,
           valveState: ValveState.open,
+          allSensors: {
+            'AIT202': 7.18 + wave * 0.11 + noise + attackLift,
+            'FIT101': 2.43 + fineWave * 0.065 + noise / 2,
+            'DEMO_ATTACK': attackLift,
+          },
           rawValveValue: 2,
         ),
       ),
