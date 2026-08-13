@@ -72,10 +72,15 @@ async def predict(request: Request):
     
     is_anomaly = True if prediction == -1 else False
     
-    # Return anomaly flag and the sensor that deviates the most (just picking first feature as a placeholder, or we can just omit sensor)
-    # The streamer expects `prediction.sensor` optionally.
+    # Find the feature that deviates the most (max absolute z-score) to provide context for the frontend
+    top_sensor = "MULTIPLE_SENSORS"
+    if is_anomaly and len(input_scaled[0]) == len(feature_cols):
+        import numpy as np
+        max_dev_idx = np.argmax(np.abs(input_scaled[0]))
+        top_sensor = feature_cols[max_dev_idx]
+    
     return {
         "anomaly": is_anomaly,
-        "sensor": "MULTIPLE_SENSORS",
+        "sensor": top_sensor,
         "sensor_data": input_df.to_dict(orient="records")[0]
     }
