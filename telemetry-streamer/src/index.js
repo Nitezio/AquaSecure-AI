@@ -43,6 +43,7 @@ startTelemetryStream({
 
     const prediction = await classifyRow(row);
     if (prediction.anomaly) {
+      console.log('ANOMALY PREDICTION RECEIVED:', prediction, 'FOR ROW:', row);
       const alert = USE_GENKIT
         ? await formatAlertFlow({
             anomaly: true,

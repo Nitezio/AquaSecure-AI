@@ -31,16 +31,23 @@ def load_and_preprocess(filepath: str, is_attack: bool = False):
             label_col = col
             break
 
-    # Extract only the critical sensors
-    features = df[CRITICAL_METRICS].copy()
+    # Drop non-numeric or target columns to get features
+    cols_to_drop = []
+    if 'Timestamp' in df.columns: cols_to_drop.append('Timestamp')
+    if label_col and label_col in df.columns: cols_to_drop.append(label_col)
+    
+    features = df.drop(columns=cols_to_drop)
+    
+    # Ensure numeric types
+    for c in features.columns:
+        features[c] = pd.to_numeric(features[c], errors='coerce')
     
     # Handle missing values by forward-filling, then backward-filling
-    features = features.ffill().bfill()
+    features = features.ffill().bfill().fillna(0.0)
     
     labels = None
     if label_col and label_col in df.columns:
         # Convert Normal to 1 and Attack (or anything else) to -1
-        # Isolation Forest uses 1 for inliers (normal) and -1 for outliers (anomalies)
         y = df[label_col]
         labels = np.where(y == 'Normal', 1, -1)
     
@@ -60,7 +67,7 @@ def main():
     print("--- Step 3: Training Isolation Forest ---")
     # n_estimators=100 means 100 trees in the forest.
     # contamination is the expected proportion of outliers (set low for normal data).
-    model = IsolationForest(n_estimators=100, contamination=0.001, random_state=42)
+    model = IsolationForest(n_estimators=100, contamination='auto', random_state=42)
     model.fit(X_train_scaled)
     
     # 5. Load and test on the attack data (4 days)
@@ -86,7 +93,8 @@ def main():
     os.makedirs("models", exist_ok=True)
     joblib.dump(model, "models/isolation_forest.pkl")
     joblib.dump(scaler, "models/scaler.pkl")
-    print("Model and scaler saved to 'models/' directory.")
+    joblib.dump(list(X_train.columns), "models/feature_cols.pkl")
+    print("Model, scaler, and feature_cols saved to 'models/' directory.")
     print("Training pipeline complete!")
 
 if __name__ == "__main__":
