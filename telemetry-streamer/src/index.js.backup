@@ -22,47 +22,13 @@ function broadcast(payload) {
 
 async function classifyRow(row) {
   try {
-    // Extract ONLY the three sensors needed and convert strings to numbers
-    const numericRow = {
-      AIT201: parseFloat(row.AIT201),
-      FIT101: parseFloat(row.FIT101),
-      MV101: parseFloat(row.MV101),
-    };
-    
-    console.log('[server] Sending to /predict:', JSON.stringify(numericRow));
-    
     const res = await fetch(PYTHON_PREDICT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(numericRow),
+      body: JSON.stringify(row),
     });
-    
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error(`[server] HTTP ${res.status}: ${errorText}`);
-      throw new Error(`predict endpoint returned ${res.status}`);
-    }
-    
-    const prediction = await res.json();
-    console.log('[server] Prediction received:', JSON.stringify(prediction));
-    
-    // Role 1's response format:
-    // { "anomaly": bool, "sensor_data": { "AIT201": float, "FIT101": float, "MV101": float } }
-    
-    let anomalySensor = 'UNKNOWN';
-    let anomalyScore = 0.0;
-    
-    if (prediction.anomaly && prediction.sensor_data) {
-      anomalySensor = 'AIT201';
-      anomalyScore = 0.85;
-    }
-    
-    return {
-      anomaly: prediction.anomaly,
-      sensor: anomalySensor,
-      score: anomalyScore,
-      raw: prediction
-    };
+    if (!res.ok) throw new Error(`predict endpoint returned ${res.status}`);
+    return await res.json();
   } catch (err) {
     console.error('[server] prediction request failed:', err.message);
     return { anomaly: false };
