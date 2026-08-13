@@ -1,25 +1,28 @@
+version: '3.8'
+
 services:
-  ai-detector:
-    build: ./ai-detector
+  python-ai:
+    build:
+      context: ./ai-detector
     ports:
       - "8000:8000"
-    networks:
-      - aquasecure-net
+    volumes:
+      - ./ai-detector/models:/app/models
 
   telemetry-streamer:
-    build: ./telemetry-streamer
+    build:
+      context: ./telemetry-streamer
     ports:
       - "3001:3001"
-    networks:
-      - aquasecure-net
+    environment:
+      - PYTHON_PREDICT_URL=http://python-ai:8000/predict
+    depends_on:
+      - python-ai
 
-  web-dashboard:
-    build: ./web-dashboard
+  frontend-dashboard:
+    build:
+      context: ./web-dashboard
     ports:
-      - "8080:8080"
-    networks:
-      - aquasecure-net
-
-networks:
-  aquasecure-net:
-    driver: bridge
+      - "80:80"
+    depends_on:
+      - telemetry-streamer
