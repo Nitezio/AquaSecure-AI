@@ -1,5 +1,5 @@
 # Stage 1: Build Flutter Web
-FROM instrumentisto/flutter:3.10.3 AS build
+FROM ghcr.io/cirruslabs/flutter:stable AS build
 WORKDIR /app
 COPY pubspec.yaml pubspec.lock ./
 RUN flutter pub get
