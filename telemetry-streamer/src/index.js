@@ -13,6 +13,8 @@ console.log(`[server] WebSocket server listening on ws://0.0.0.0:${WS_PORT}`);
 console.log(`[server] Reading telemetry from ${CSV_PATH} every ${INTERVAL_MS}ms`);
 console.log(`[server] Sending each row to ${PYTHON_PREDICT_URL}`);
 
+let alertCounter = 0;
+
 function broadcast(payload) {
   const data = JSON.stringify(payload);
   wss.clients.forEach((client) => {
@@ -22,7 +24,6 @@ function broadcast(payload) {
 
 async function classifyRow(row) {
   try {
-    // Extract ONLY the three sensors needed and convert strings to numbers
     const numericRow = {
       AIT201: parseFloat(row.AIT201),
       FIT101: parseFloat(row.FIT101),
@@ -45,9 +46,6 @@ async function classifyRow(row) {
     
     const prediction = await res.json();
     console.log('[server] Prediction received:', JSON.stringify(prediction));
-    
-    // Role 1's response format:
-    // { "anomaly": bool, "sensor_data": { "AIT201": float, "FIT101": float, "MV101": float } }
     
     let anomalySensor = 'UNKNOWN';
     let anomalyScore = 0.0;
@@ -73,21 +71,42 @@ startTelemetryStream({
   filePath: CSV_PATH,
   intervalMs: INTERVAL_MS,
   onRow: async (row) => {
-    broadcast({ type: 'telemetry', data: row, timestamp: new Date().toISOString() });
+    const telemetryPayload = {
+      type: 'telemetry',
+      timestamp: new Date().toISOString(),
+      sensors: {
+        AIT201: parseFloat(row.AIT201),
+        FIT101: parseFloat(row.FIT101),
+        MV101: parseFloat(row.MV101),
+      },
+    };
+    broadcast(telemetryPayload);
 
     const prediction = await classifyRow(row);
     if (prediction.anomaly) {
-      const alert = USE_GENKIT
-        ? await formatAlertFlow({
-            anomaly: true,
-            sensor: prediction.sensor,
-            score: prediction.score,
-            raw: row,
-          })
-        : formatAlertPlain(prediction);
+      alertCounter += 1;
+      const alertPayload = {
+        type: 'alert',
+        anomaly: true,
+        id: `attack-${String(alertCounter).padStart(3, '0')}`,
+        timestamp: new Date().toISOString(),
+        severity: 'critical',
+        sensor: prediction.sensor,
+        title: 'CHEMICAL PROCESS ANOMALY',
+        message: `Anomaly detected on ${prediction.sensor} — physical parameters deviate from baseline.`,
+        confidence: prediction.score,
+        explanation: `${prediction.sensor} was the strongest contributor to the anomaly score.`,
+        violatedRule: 'Sensor reading deviated significantly from normal operating range.',
+        recommendation: `Verify ${prediction.sensor} locally and maintain manual override.`,
+        contributors: [
+          { sensor: 'AIT201', impact: 0.85, value: parseFloat(row.AIT201) },
+          { sensor: 'FIT101', impact: 0.10, value: parseFloat(row.FIT101) },
+          { sensor: 'MV101', impact: 0.05, value: parseFloat(row.MV101) },
+        ],
+      };
 
-      console.log('[server] ANOMALY:', alert.message);
-      broadcast(alert);
+      console.log('[server] ANOMALY:', alertPayload.message);
+      broadcast(alertPayload);
     }
   },
 });
@@ -95,4 +114,15 @@ startTelemetryStream({
 wss.on('connection', (ws) => {
   console.log('[server] Frontend client connected');
   ws.on('close', () => console.log('[server] Frontend client disconnected'));
+  
+  ws.on('message', (data) => {
+    try {
+      const msg = JSON.parse(data);
+      if (msg.type === 'alert_acknowledgement') {
+        console.log(`[server] Alert acknowledged: ${msg.alertId} at ${msg.acknowledgedAt}`);
+      }
+    } catch (err) {
+      console.error('[server] Failed to parse incoming message:', err.message);
+    }
+  });
 });
